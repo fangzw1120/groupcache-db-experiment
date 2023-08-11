@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/capotej/groupcache-db-experiment/api"
 	"github.com/capotej/groupcache-db-experiment/client"
-	"net/rpc"
+	"github.com/capotej/groupcache-db-experiment/rpc"
 )
 
 func main() {
@@ -22,13 +22,17 @@ func main() {
 	if *cget {
 		client, err := rpc.DialHTTP("tcp", "localhost:"+*port)
 		if err != nil {
-			fmt.Printf("error %s", err)
+			fmt.Printf("error %s\n", err)
+			return
 		}
+
 		args := &api.Load{*key}
 		var reply api.ValueResult
+
 		err = client.Call("Frontend.Get", args, &reply)
 		if err != nil {
-			fmt.Printf("error %s", err)
+			fmt.Printf("error %s\n", err)
+			return
 		}
 		fmt.Println(string(reply.Value))
 		return

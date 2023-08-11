@@ -1,7 +1,4 @@
 #!/bin/sh
-cd api && go build
-cd ../cli && go build
-cd ../client && go build
-cd ../dbserver && go build
-cd ../slowdb && go build
-cd ../frontend && go build
+cd cli && GOOS=linux GOARCH=amd64 go build
+cd ../dbserver && GOOS=linux GOARCH=amd64 go build
+cd ../frontend && GOOS=linux GOARCH=amd64 go build

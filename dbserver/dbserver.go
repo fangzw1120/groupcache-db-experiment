@@ -5,10 +5,11 @@ package main
 import (
 	"fmt"
 	"github.com/capotej/groupcache-db-experiment/api"
+	"github.com/capotej/groupcache-db-experiment/rpc"
 	"github.com/capotej/groupcache-db-experiment/slowdb"
 	"net"
 	"net/http"
-	"net/rpc"
+	//"net/rpc"
 )
 
 type Server struct {
@@ -16,12 +17,14 @@ type Server struct {
 }
 
 func (s *Server) Get(args *api.Load, reply *api.ValueResult) error {
+	fmt.Printf("SlowDB server Get: %+v\n", args)
 	data := s.db.Get(args.Key)
 	reply.Value = string(data)
 	return nil
 }
 
 func (s *Server) Set(args *api.Store, reply *api.NullResult) error {
+	fmt.Printf("SlowDB server Set: %+v\n", args)
 	s.db.Set(args.Key, args.Value)
 	*reply = 0
 	return nil
